@@ -1,3 +1,4 @@
 service : {
   checkBalanceOf: (principal) -> (nat) query;
+  getSign: () -> (text) query;
 }

@@ -1,9 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
+import { token } from "../../../declarations/token"
+import { Principal } from "@dfinity/principal"
 
 function Balance() {
-  
+  const [user, setUser] = useState({
+    principalId: null,
+    balance: ""
+  })
   async function handleClick() {
-    console.log("Balance Button Clicked");
+    const principal = Principal.fromText(user.principalId)
+    const tokenName = await token.getSign()
+    const userBalance = await token.checkBalanceOf(principal)
+    setUser(prevState => ({
+      ...prevState,
+      balance: userBalance.toLocaleString() + " " + tokenName
+    }))
+  }
+
+  function handleChange(event) {
+    const pId = event.target.value
+    console.log(pId)
+    setUser(prevState => ({
+      ...prevState,
+      principalId: pId
+    }))
   }
 
 
@@ -15,6 +35,8 @@ function Balance() {
           id="balance-principal-id"
           type="text"
           placeholder="Enter a Principal ID"
+          value={user.principalId}
+          onChange={handleChange}
         />
       </p>
       <p className="trade-buttons">
@@ -25,7 +47,7 @@ function Balance() {
           Check Balance
         </button>
       </p>
-      <p>This account has a balance of XYZ.</p>
+      <p>This account has a balance of {user.balance}.</p>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import Principal "mo:base/Principal";
 import HashMap "mo:base/HashMap";
+import Text "mo:base/Text";
 actor Token {
 
     var owner : Principal = Principal.fromText("mlqx3-t4ki4-e3psc-zamtx-xmydq-tj3rl-hxytb-77iio-sowpy-22p4h-lae");
@@ -17,5 +18,9 @@ actor Token {
         };
 
         return balance;
+    };
+
+    public query func getSign() : async Text {
+        return sign;
     };
 };
